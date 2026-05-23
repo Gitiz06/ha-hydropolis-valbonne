@@ -126,3 +126,48 @@ def mock_hydropolis_client(fake_measures, fake_contract):
         return_value=client,
     ):
         yield client
+
+
+# ---------------------------------------------------------------------------
+# Fixtures for multi-contract tests
+# ---------------------------------------------------------------------------
+
+FAKE_CONTRAT_ID_2 = "8888"
+FAKE_SERIAL_2 = "XYZ987654"
+
+
+@pytest.fixture
+def fake_contract_2() -> HydropolisContract:
+    return HydropolisContract(
+        contrat_id=FAKE_CONTRAT_ID_2,
+        numcontrat="C-8888",
+        pconso_id="P-200",
+        compteur_numserie=FAKE_SERIAL_2,
+        actif=True,
+        address="2 Rue du Test",
+    )
+
+
+@pytest.fixture
+def fake_measures_2() -> list[DailyMeasure]:
+    return _make_measures(count=5, start_date=date.today() - timedelta(days=10))
+
+
+@pytest.fixture
+def mock_config_entry_2(hass: HomeAssistant):
+    """Second config entry — same username, different contract."""
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        title="Hydropolis C-8888",
+        data={
+            CONF_USERNAME: FAKE_EMAIL,
+            CONF_PASSWORD: FAKE_PASSWORD,
+            CONF_CONTRAT_ID: FAKE_CONTRAT_ID_2,
+            "compteur_numserie": FAKE_SERIAL_2,
+        },
+        unique_id=FAKE_CONTRAT_ID_2,
+    )
+    entry.add_to_hass(hass)
+    return entry
