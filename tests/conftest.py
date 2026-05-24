@@ -60,11 +60,11 @@ def fake_contract() -> HydropolisContract:
     )
 
 
-def _make_measures(count: int = 5, start_date: date | None = None) -> list[DailyMeasure]:
+def _make_measures(count: int = 5, start_date: date | None = None, start_index: int = 100_000) -> list[DailyMeasure]:
     """Build a list of realistic DailyMeasure objects."""
     base = start_date or date.today() - timedelta(days=count)
     measures = []
-    index = 100_000
+    index = start_index
     for i in range(count):
         d = base + timedelta(days=i)
         consumption = 150 + i * 10
@@ -150,7 +150,7 @@ def fake_contract_2() -> HydropolisContract:
 
 @pytest.fixture
 def fake_measures_2() -> list[DailyMeasure]:
-    return _make_measures(count=5, start_date=date.today() - timedelta(days=10))
+    return _make_measures(count=3, start_date=date.today() - timedelta(days=10))
 
 
 @pytest.fixture
