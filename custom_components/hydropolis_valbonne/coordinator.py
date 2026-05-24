@@ -8,7 +8,7 @@ import logging
 
 from homeassistant.components.recorder.models import StatisticData, StatisticMetaData
 from homeassistant.components.recorder.statistics import (
-    StatisticMeanType,
+#    StatisticMeanType,
     StatisticsRow,
     async_add_external_statistics,
     async_import_statistics,
@@ -21,7 +21,6 @@ from homeassistant.exceptions import ConfigEntryError
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 import homeassistant.util.dt as dt_util
-from homeassistant.util.unit_conversion import VolumeConverter
 
 from .api import DailyMeasure, HydropolisApiError, HydropolisAuthError, HydropolisClient
 from .const import CONF_CONTRAT_ID, DATA_REFRESH_INTERVAL, DOMAIN
@@ -193,12 +192,12 @@ class HydropolisCoordinator(DataUpdateCoordinator[HydropolisData]):
             return
 
         metadata = StatisticMetaData(
-            mean_type=StatisticMeanType.NONE,
+#            mean_type=StatisticMeanType.NONE,
+            has_mean=False,
             has_sum=True,
             name=f"Hydropolis {self._contrat_id} Water",
             source=DOMAIN,
             statistic_id=self.statistic_id,
-            unit_class=VolumeConverter.UNIT_CLASS,
             unit_of_measurement=UnitOfVolume.LITERS,
         )
 
