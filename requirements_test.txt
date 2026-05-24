@@ -6,6 +6,7 @@ pytest-timeout>=2.1.0
 
 # HA test harness (provides hass fixture, MockConfigEntry, recorder, etc.)
 pytest-homeassistant-custom-component>=0.13.160
+homeassistant>=2025.4.0
 
 # Credentials from .env file
 python-dotenv>=1.0.0
