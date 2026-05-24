@@ -13,3 +13,4 @@ python-dotenv>=1.0.0
 
 # Snapshot testing
 syrupy>=4.6.0
+
