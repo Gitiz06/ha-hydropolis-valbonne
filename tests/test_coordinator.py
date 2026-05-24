@@ -145,8 +145,11 @@ async def test_two_contracts_share_single_client(
     """
     from custom_components.hydropolis_valbonne.coordinator import SHARED_CLIENTS_KEY
 
-    await hass.config_entries.async_setup(mock_config_entry.entry_id)
-    await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
+    from homeassistant.config_entries import ConfigEntryState
+    if mock_config_entry.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry.entry_id)
+    if mock_config_entry_2.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
     await hass.async_block_till_done()
 
     from homeassistant.config_entries import ConfigEntryState
@@ -187,8 +190,11 @@ async def test_two_contracts_independent_data(
         side_effect=measures_by_contract
     )
 
-    await hass.config_entries.async_setup(mock_config_entry.entry_id)
-    await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
+    from homeassistant.config_entries import ConfigEntryState
+    if mock_config_entry.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry.entry_id)
+    if mock_config_entry_2.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
     await hass.async_block_till_done()
 
     coordinator_1: HydropolisCoordinator = mock_config_entry.runtime_data
@@ -208,8 +214,11 @@ async def test_second_contract_has_distinct_statistic_id(
     """Each contract must have a unique statistic_id for the Energy dashboard."""
     from custom_components.hydropolis_valbonne.const import DOMAIN
 
-    await hass.config_entries.async_setup(mock_config_entry.entry_id)
-    await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
+    from homeassistant.config_entries import ConfigEntryState
+    if mock_config_entry.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry.entry_id)
+    if mock_config_entry_2.state is not ConfigEntryState.LOADED:
+        await hass.config_entries.async_setup(mock_config_entry_2.entry_id)
     await hass.async_block_till_done()
 
     coordinator_1: HydropolisCoordinator = mock_config_entry.runtime_data
